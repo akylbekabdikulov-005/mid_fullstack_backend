@@ -16,8 +16,16 @@ connectDB().catch((error) => {
 });
 
 const app = express();
-app.use(cors({ origin: 'https://mid-fullstack-frontend-rsz2.vercel.app', 
-  credentials: true }));
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || origin.endsWith('.vercel.app') || origin === 'https://mid-fullstack-frontend-rsz2.vercel.app') {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
