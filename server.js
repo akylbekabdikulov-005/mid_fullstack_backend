@@ -16,7 +16,8 @@ connectDB().catch((error) => {
 });
 
 const app = express();
-app.use(cors({ origin: process.env.FRONTEND_URL || '*' }));
+app.use(cors({ origin: 'https://mid-fullstack-frontend-rsz2.vercel.app', 
+  credentials: true }));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
@@ -31,6 +32,6 @@ const server = http.createServer(app);
 initWebSocketServer(server);
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server listening on port ${PORT}`);
 });
